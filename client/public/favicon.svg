@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="sPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7e22ce;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sAccent" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0891b2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    <filter id="sGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.4" flood-color="#4f46e5"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0a0a" rx="28"/>
+  
+  <!-- Subtle gradient background -->
+  <rect width="128" height="128" fill="url(#sPrimary)" opacity="0.06" rx="28"/>
+  
+  <!-- Outer border glow -->
+  <rect x="8" y="8" width="112" height="112" fill="none" stroke="url(#sPrimary)" stroke-width="1" rx="24" opacity="0.3"/>
+  
+  <!-- Stylized S shape - modern and geometric -->
+  <!-- Top curve of S -->
+  <path d="M 58 28 Q 88 28 88 45 Q 88 55 72 60 L 56 65 Q 40 70 40 83 Q 40 100 58 100 Q 88 100 88 88" 
+        fill="none" stroke="url(#sPrimary)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" filter="url(#sGlow)"/>
+  
+  <!-- Secondary S accent - creates depth -->
+  <path d="M 58 28 Q 88 28 88 45 Q 88 55 72 60 L 56 65 Q 40 70 40 83 Q 40 100 58 100 Q 88 100 88 88" 
+        fill="none" stroke="url(#sAccent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+  
+  <!-- Highlight accent on top -->
+  <ellipse cx="70" cy="42" rx="8" ry="6" fill="url(#sAccent)" opacity="0.5"/>
+  
+  <!-- Accent dot for visual interest -->
+  <circle cx="102" cy="28" r="3.5" fill="url(#sAccent)" opacity="0.8"/>
+  
+  <!-- Corner accent line -->
+  <line x1="20" y1="20" x2="35" y2="20" stroke="url(#sPrimary)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+</svg>

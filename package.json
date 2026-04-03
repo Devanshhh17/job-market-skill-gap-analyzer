@@ -1,0 +1,18 @@
+{
+  "name": "skillect",
+  "version": "1.0.0",
+  "description": "Skillect - Data Science Project: Market Intelligence Platform using Advanced Analytics, Statistical Analysis, and Recommendation Engines for Career Development",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": ["data-science", "job-market", "skill-gap", "react", "node", "mongodb"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
