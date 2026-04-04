@@ -40,7 +40,12 @@ app.get('/api/health', (req, res) => {
 // Error handling middleware
 app.use(errorMiddleware)
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+// Start server if not running in Vercel serverless
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+  })
+}
+
+// Export for Vercel serverless function
+module.exports = app
