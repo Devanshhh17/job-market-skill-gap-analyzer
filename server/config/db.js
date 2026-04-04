@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const connectDB = async () => {
+  if (!process.env.MONGODB_URI) {
+    console.error('Fatal Error: MONGODB_URI is not defined in the environment variables.')
+    return false
+  }
   let retries = 5
   while (retries > 0) {
     try {
