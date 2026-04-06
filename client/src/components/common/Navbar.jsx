@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { FaChartLine, FaSearch, FaUserCheck, FaCog, FaRocket } from 'react-icons/fa'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaChartLine, FaSearch, FaUserCheck, FaCog, FaRocket, FaBars, FaTimes } from 'react-icons/fa'
 
 const Navbar = () => {
   const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,11 @@ const Navbar = () => {
     { path: '/jobs', label: 'Explore', icon: FaSearch },
     { path: '/admin', label: 'Admin', icon: FaCog }
   ]
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [location.pathname])
 
   return (
     <motion.nav
@@ -85,21 +91,76 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Right - Get Started */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Link
-              to="/skill-gap"
-              className="premium-button text-sm px-4 py-2"
+          {/* Right - Mobile Menu Toggle & Get Started */}
+          <div className="flex items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="hidden sm:block"
             >
-              <span>Start</span>
-            </Link>
-          </motion.div>
+              <Link
+                to="/skill-gap"
+                className="premium-button text-sm px-4 py-2"
+              >
+                <span>Start</span>
+              </Link>
+            </motion.div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-gray-300 hover:text-white p-2 focus:outline-none"
+            >
+              {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+          >
+            <div className="px-4 pt-2 pb-6 space-y-2">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                      isActive
+                        ? 'bg-white/10 text-white border border-white/20'
+                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    <Icon className={`text-lg transition-all duration-300 ${
+                      isActive ? 'text-cyan-400' : 'text-gray-400'
+                    }`} />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+              <div className="pt-4 sm:hidden">
+                <Link
+                  to="/skill-gap"
+                  className="w-full flex justify-center premium-button text-sm px-4 py-3"
+                >
+                  <span>Start Analysis</span>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
